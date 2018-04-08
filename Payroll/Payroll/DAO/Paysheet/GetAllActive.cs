@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Payroll.DAO
 {
-    public class Payroll
+    public partial class Paysheet
     {
         public static async Task<List<Tbl_Payroll>> GetAllActive()
         {

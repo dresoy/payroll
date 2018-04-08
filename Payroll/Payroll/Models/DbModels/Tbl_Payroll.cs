@@ -13,11 +13,12 @@ namespace Payroll.Models.DbModels
         public Guid Id { get; set; }
 
         [MaxLength(30), Required]
-        [Display(Name= "Tipo") ]
+        [Display(Name = "Tipo")]
         public string Role { get; set; }
 
         [Required]
         [Display(Name = "Seccion")]
+        [RegularExpression("^[0-9]*$",ErrorMessage = "Numeros enteros solamente")]
         public Int16 Section { get; set; }
 
         [Required, MaxLength(30), MinLength(2)]
