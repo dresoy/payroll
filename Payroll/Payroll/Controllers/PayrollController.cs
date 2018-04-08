@@ -85,19 +85,31 @@ namespace Payroll.Controllers
         public async Task<ActionResult> Create([Bind(Include = "Id,Role,Section,Name,LastName,Hours,Amount")] Tbl_Payroll tbl_Payroll)
         {
 
-            DateTime thisMoment = DateTime.Now;
-
-            tbl_Payroll.Created = thisMoment;
-            tbl_Payroll.Modified = thisMoment;
-            tbl_Payroll.Deleted = false;
-
             if (ModelState.IsValid)
             {
-                tbl_Payroll.Id = Guid.NewGuid();
-                db.Tbl_Payroll.Add(tbl_Payroll);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                //    tbl_Payroll.Id = Guid.NewGuid();
+                //    db.Tbl_Payroll.Add(tbl_Payroll);
+                //    await db.SaveChangesAsync();
+                //    return RedirectToAction("Index");
+
+
+                List<Tbl_Payroll> newList = new List<Tbl_Payroll>();
+                newList.Add(tbl_Payroll);
+
+                try
+                {
+                    var result = await DAO.Paysheet.AddCollectionAsync(newList);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+
             }
+
+
 
             return View(tbl_Payroll);
         }
@@ -122,13 +134,25 @@ namespace Payroll.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Role,Section,Name,LastName,Hours,Amount,Created,Modified,Deleted")] Tbl_Payroll tbl_Payroll)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Role,Section,Name,LastName,Hours,Amount")] Tbl_Payroll tbl_Payroll)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tbl_Payroll).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                //db.Entry(tbl_Payroll).State = EntityState.Modified;
+                //await db.SaveChangesAsync();
+                try
+                {
+                    var result = await DAO.Paysheet.EditAsync(tbl_Payroll);
+                }
+                catch (Exception ex)
+                {
+
+
+                }
+
+
                 return RedirectToAction("Index");
+
             }
             return View(tbl_Payroll);
         }

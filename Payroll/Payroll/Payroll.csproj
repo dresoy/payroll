@@ -151,7 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\PayrollController.cs" />
+    <Compile Include="DAO\Paysheet\AddCollection.cs" />
     <Compile Include="DAO\Paysheet\Delete.cs" />
+    <Compile Include="DAO\Paysheet\Edit.cs" />
     <Compile Include="DAO\Paysheet\GetActive.cs" />
     <Compile Include="DAO\Paysheet\GetAllActive.cs" />
     <Compile Include="Utilities\Logger.cs" />
@@ -171,6 +173,7 @@
     <Compile Include="Models\dataContext.cs" />
     <Compile Include="Models\DbModels\Tbl_Payroll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\StringManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
