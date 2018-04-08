@@ -26,7 +26,7 @@ namespace Payroll.Controllers
 
             try
             {
-                payrolls = await DAO.Paysheet.GetAllActive();
+                payrolls = await DAO.Paysheet.GetAllActiveAsync();
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace Payroll.Controllers
             try
             {
 
-                tbl_Payroll = await DAO.Paysheet.GetActive((Guid)id);
+                tbl_Payroll = await DAO.Paysheet.GetActiveAsync((Guid)id);
                 if (tbl_Payroll == null)
                 {
                     throw new Exception("Registro no encontrado");
@@ -136,15 +136,42 @@ namespace Payroll.Controllers
         // GET: Payroll/Delete/5
         public async Task<ActionResult> Delete(Guid? id)
         {
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //Tbl_Payroll tbl_Payroll = await db.Tbl_Payroll.FindAsync(id);
+            //if (tbl_Payroll == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(tbl_Payroll);
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tbl_Payroll tbl_Payroll = await db.Tbl_Payroll.FindAsync(id);
-            if (tbl_Payroll == null)
+
+            ViewBag.hasError = false;
+            ViewBag.errorMessage = null;
+            Tbl_Payroll tbl_Payroll = null;
+
+            try
             {
-                return HttpNotFound();
+
+                tbl_Payroll = await DAO.Paysheet.GetActiveAsync((Guid)id);
+                if (tbl_Payroll == null)
+                {
+                    throw new Exception("Registro no encontrado");
+                }
+
             }
+            catch (Exception ex)
+            {
+                ViewBag.hasError = false;
+                ViewBag.errorMessage = ex.Message;
+            }
+
             return View(tbl_Payroll);
         }
 
@@ -153,10 +180,33 @@ namespace Payroll.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
-            Tbl_Payroll tbl_Payroll = await db.Tbl_Payroll.FindAsync(id);
-            db.Tbl_Payroll.Remove(tbl_Payroll);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            //Tbl_Payroll tbl_Payroll = await db.Tbl_Payroll.FindAsync(id);
+            //db.Tbl_Payroll.Remove(tbl_Payroll);
+            //await db.SaveChangesAsync();
+            //return RedirectToAction("Index");
+
+            ViewBag.hasError = false;
+            ViewBag.errorMessage = null;
+
+            try
+            {
+                var result = await DAO.Paysheet.DeleteAsync(id);
+
+                if (result == null)
+                {
+                    throw new Exception("Registro no encontrado");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.hasError = false;
+                ViewBag.errorMessage = ex.Message;
+                return View();
+            }
         }
 
         protected override void Dispose(bool disposing)

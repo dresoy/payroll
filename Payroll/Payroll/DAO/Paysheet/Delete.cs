@@ -10,7 +10,8 @@ namespace Payroll.DAO
 {
     public partial class Paysheet
     {
-        public static async Task<Tbl_Payroll> GetActiveAsync(Guid Id)
+
+        public static async Task<Tbl_Payroll> DeleteAsync(Guid Id)
         {
             await Logger.Log("Consultando registros de Nomina", Logger.LogTypes.Information);
             try
@@ -18,13 +19,16 @@ namespace Payroll.DAO
                 using (var db = new Models.dataContext())
                 {
                     var result = await Task.Run(() => (from t in db.Tbl_Payroll
-                                                       where t.Deleted == false
                                                        where t.Id == Id
                                                        select t).ToList());
 
                     if (result.Count == 1)
                     {
-                        return result.FirstOrDefault();
+                        
+                        result.Single().Deleted = true;
+                        result.Single().Modified = DateTime.Now;
+                        await db.SaveChangesAsync();
+                        return result.Single();
                     }
                     else
                     {
@@ -39,5 +43,6 @@ namespace Payroll.DAO
                 throw new Exception("Esta Transaccion no puede ser realizada en el momento");
             }
         }
+
     }
 }

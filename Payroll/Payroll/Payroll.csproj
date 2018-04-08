@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\PayrollController.cs" />
+    <Compile Include="DAO\Paysheet\Delete.cs" />
     <Compile Include="DAO\Paysheet\GetActive.cs" />
     <Compile Include="DAO\Paysheet\GetAllActive.cs" />
     <Compile Include="Utilities\Logger.cs" />
@@ -224,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\LoadExcell\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -10,7 +10,7 @@ namespace Payroll.DAO
 {
     public partial class Paysheet
     {
-        public static async Task<List<Tbl_Payroll>> GetAllActive()
+        public static async Task<List<Tbl_Payroll>> GetAllActiveAsync()
         {
             await Logger.Log("Consultando registros de Nomina", Logger.LogTypes.Information);
             try
