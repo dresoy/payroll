@@ -1,0 +1,71 @@
+﻿@model Payroll.DAO.Reports.Payroll.EmployeesByTypeModel
+
+@{ ViewBag.Title = "Reporte";}
+
+<h2>Reporte</h2>
+
+@if (ViewBag.loading == false)
+{
+    if (ViewBag.hasError == true)
+    {
+        <div class="alert alert-danger" role="alert">
+            Error al cargar Reporte
+        </div>
+    }
+    else
+    {
+        <div class="panel panel-default">
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        Registros
+                    </th>
+                    <th>
+                        Tipo
+                    </th>
+                    <th>
+                        Importe Promedio
+                    </th>
+                    <th>
+                        Total Horas
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.Group)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Count)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AverageAmount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalHours)
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="3">
+                        <h3 class="text-right"><strong>Importe promedio general</strong></h3>
+                    </td>
+                    <td class="text-left">
+                        <h3>@Model.AverageAmountPerHour</h3>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center mgt-50">
+        <h3>
+            <span class="glyphicon glyphicon-refresh normal-right-spinner" aria-hidden="true"></span>
+        </h3>
+    </div>
+}

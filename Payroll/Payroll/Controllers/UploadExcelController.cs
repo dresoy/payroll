@@ -52,7 +52,7 @@ namespace Payroll.Controllers
                             var row = table.Rows[i].ItemArray;
 
 
-                            Tbl_Payroll n = await DAO.Converter.ToPayrollModelAsync(
+                            Tbl_Payroll n = await DAO.Paysheet.ToPayrollModelAsync(
                                      row[0].ToString(), row[1].ToString(), row[2].ToString(),
                                      row[3].ToString(), row[4].ToString(), row[5].ToString()
                                   );

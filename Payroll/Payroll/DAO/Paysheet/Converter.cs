@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Payroll.DAO
 {
-    public static class Converter
+    public static partial class Paysheet
     {
 
         public static async System.Threading.Tasks.Task<Tbl_Payroll> ToPayrollModelAsync(string role, string section, string name, string lastName, string hours, string amount)
