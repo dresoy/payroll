@@ -11,7 +11,7 @@ namespace Payroll.Utilities
 {
     public static class ExcelManager
     {
-        public static async Task<DataSet> ExcelReaderAsync(Stream file)
+        public static async Task<DataTableCollection> ExcelReaderAsync(Stream file)
         {
             //using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             using (var stream = file)
@@ -36,7 +36,7 @@ namespace Payroll.Utilities
 
                     // 2. Use the AsDataSet extension method
                     DataSet result = await Task.Run(()=> reader.AsDataSet());
-                    return result;
+                    return result.Tables;
                     // The result of each spreadsheet is in result.Tables
                 }
             }

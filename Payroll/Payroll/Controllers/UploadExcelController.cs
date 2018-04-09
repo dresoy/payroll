@@ -1,4 +1,6 @@
 ﻿using ExcelDataReader;
+using Payroll.Models.DbModels;
+using Payroll.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,6 +32,7 @@ namespace Payroll.Controllers
         public async Task<ActionResult> UploadExcelFile(HttpPostedFileBase file)
         {
             ViewBag.loading = true;
+            await Logger.Log("Iniciando lectura de archivo de Excel", Logger.LogTypes.Information);
             try
             {
                 if (file.ContentLength > 0)
@@ -37,18 +40,40 @@ namespace Payroll.Controllers
                     //string _FileName = Path.GetFileName(file.FileName);
                     //string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
                     //file.SaveAs(_path);
-                    DataSet ExcelDS = await Utilities.ExcelManager.ExcelReaderAsync(file.InputStream);
+                    DataTableCollection fileTables = await Utilities.ExcelManager.ExcelReaderAsync(file.InputStream);
 
+                    if (fileTables.Count == 0) { throw new Exception("Archivo sin hojas"); }
+
+                    foreach (System.Data.DataTable table in fileTables)
+                    {
+                        List<Models.DbModels.Tbl_Payroll> newCollection = new List<Models.DbModels.Tbl_Payroll>();
+                        for (int i = 1; i < table.Rows.Count; i++)
+                        {
+                            var row = table.Rows[i].ItemArray;
+
+
+                            Tbl_Payroll n = await DAO.Converter.ToPayrollModelAsync(
+                                     row[0].ToString(), row[1].ToString(), row[2].ToString(),
+                                     row[3].ToString(), row[4].ToString(), row[5].ToString()
+                                  );
+
+                            newCollection.Add(n);
+                        }
+
+                        await DAO.Paysheet.AddCollectionAsync(newCollection);
+                    }
 
 
                 }
-                ViewBag.Message = "File Uploaded Successfully!!";
+                //ViewBag.Message = "File Uploaded Successfully!!";
 
-                return View();
+                //return View();
+                return RedirectToAction("Index", "Payroll");
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.Message = "File upload failed!!";
+                await Logger.Log("Subir archivo de Excel " + ex.Message, Logger.LogTypes.Error);
+                ViewBag.Message = "Error al leer archivo, puede ser por tipo incorrecto o formato erroneo";
                 ViewBag.hasError = true;
                 ViewBag.loading = false;
                 return View();

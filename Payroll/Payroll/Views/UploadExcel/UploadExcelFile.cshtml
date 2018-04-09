@@ -17,10 +17,10 @@
 
             <input class="btn btn-success mgt-15" type="submit" value="Subir" />
 
-            @if (ViewBag.hasError != null)
+            @if (ViewBag.hasError == true)
             {
                 <div class="alert alert-danger" role="alert">
-                    Error al realizar la carga de datos
+                    @ViewBag.Message;
                 </div>
 
             }

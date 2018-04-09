@@ -160,10 +160,15 @@
     <Compile Include="Controllers\PayrollController.cs" />
     <Compile Include="Controllers\UploadExcelController.cs" />
     <Compile Include="DAO\Paysheet\AddCollection.cs" />
+    <Compile Include="DAO\Paysheet\Converter.cs" />
     <Compile Include="DAO\Paysheet\Delete.cs" />
     <Compile Include="DAO\Paysheet\Edit.cs" />
     <Compile Include="DAO\Paysheet\GetActive.cs" />
     <Compile Include="DAO\Paysheet\GetAllActive.cs" />
+    <Compile Include="Migrations\201804090350181_initial.cs" />
+    <Compile Include="Migrations\201804090350181_initial.Designer.cs">
+      <DependentUpon>201804090350181_initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\ExcelManager.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -173,10 +178,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804080337372_firstTable.cs" />
-    <Compile Include="Migrations\201804080337372_firstTable.Designer.cs">
-      <DependentUpon>201804080337372_firstTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\dataContext.cs" />
@@ -253,8 +254,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804080337372_firstTable.resx">
-      <DependentUpon>201804080337372_firstTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804090350181_initial.resx">
+      <DependentUpon>201804090350181_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -44,8 +44,8 @@ namespace Payroll.DAO
             try
             {
                 var result = await Task.Run(() => (from t in db.Tbl_Payroll
-                                                   where t.Name == row.Name
-                                                   where t.LastName == row.LastName
+                                                   where t.Name.Trim() == row.Name.Trim()
+                                                   where t.LastName.Trim() == row.LastName.Trim()
                                                    select t).ToList());
 
                 if (result.Count == 0)
@@ -54,8 +54,9 @@ namespace Payroll.DAO
                     row.Created = thisMoment;
                     row.Modified = thisMoment;
                     row.Deleted = false;
-                    row.Name = StringManager.UpperOnlyFirstLetter(row.Name);
-                    row.LastName = StringManager.UpperOnlyFirstLetter(row.LastName);
+                    row.Name = StringManager.UpperOnlyFirstLetter(row.Name.Trim());
+                    row.LastName = StringManager.UpperOnlyFirstLetter(row.LastName.Trim());
+                    
 
                     db.Tbl_Payroll.Add(row);
                 }
@@ -66,12 +67,14 @@ namespace Payroll.DAO
                 else
                 {
                     var data = result.Single();
-                    //result.Single().Modified = thisMoment;
-                    //result.Single().Deleted = false;
                     data.Modified = thisMoment;
                     data.Deleted = false;
-                    data.Name = row.Name.ToUpperInvariant();
-
+                    data.Name = StringManager.UpperOnlyFirstLetter(row.Name.Trim());
+                    data.LastName = StringManager.UpperOnlyFirstLetter(row.LastName.Trim());
+                    data.Section = row.Section;
+                    data.Role = row.Role;
+                    data.Hours = row.Hours;
+                    data.Amount = row.Amount;
                 }
 
                 return result.Single();
