@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Cargar Excel";
+}
+
+<h2>Carga de Nomina desde Excell</h2>
+
+@if (ViewBag.loading == false)
+{
+    using (Html.BeginForm("UploadExcelFile", "UploadExcel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div>
+            @*@Html.TextBox("file", "", new { type = "file" }) <br />*@
+
+            <input id="file" name="file" value="" type="file" accept=".xls, .xlsx">
+
+            <input class="btn btn-success mgt-15" type="submit" value="Subir" />
+
+            @if (ViewBag.hasError != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    Error al realizar la carga de datos
+                </div>
+
+            }
+
+        </div>
+    }
+}
+else
+{
+    <div class="text-center mgt-50">
+        <h3>
+            <span class="glyphicon glyphicon-refresh normal-right-spinner" aria-hidden="true"></span>
+        </h3>
+    </div>
+}
