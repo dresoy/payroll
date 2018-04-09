@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,7 +11,7 @@ namespace Payroll.Controllers
     public class ReportController : Controller
     {
         // GET: Report
-        public async System.Threading.Tasks.Task<ActionResult> IndexAsync()
+        public async Task<ActionResult> IndexAsync()
         {
             DAO.Reports.Payroll.EmployeesByTypeModel r = null;
             ViewBag.loading = true;
@@ -29,5 +30,22 @@ namespace Payroll.Controllers
 
             return View(r);
         }
+
+        public async Task<ActionResult> LogsAsync()
+        {
+
+            try
+            {
+                await Logger.GetLogs();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return View();
+        }
+
     }
 }

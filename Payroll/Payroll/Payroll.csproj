@@ -239,6 +239,7 @@
     <Content Include="Views\Payroll\Index.cshtml" />
     <Content Include="Views\UploadExcel\UploadExcelFile.cshtml" />
     <Content Include="Views\Report\IndexAsync.cshtml" />
+    <Content Include="Views\Report\LogsAsync.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

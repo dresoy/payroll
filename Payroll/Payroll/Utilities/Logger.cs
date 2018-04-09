@@ -4,11 +4,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml.Linq;
 
 namespace Payroll.Utilities
 {
     public static class Logger
     {
+
 
         public enum LogTypes
         {
@@ -19,16 +21,15 @@ namespace Payroll.Utilities
 
         public static async Task Log(string Message, LogTypes LogType, object Metadata)
         {
-            //Write something in here;
+
             HttpClient client = new HttpClient();
 
-            //var requestJson = Newtonsoft.Json.JsonConvert.SerializeObject();
             try
             {
                 HttpResponseMessage response = await client.PostAsJsonAsync("http://silogger.azurewebsites.net/json/Log",
                     new
                     {
-                        email = "test@test",
+                        email = mail,
                         message = Message,
                         level = (int)LogType,
                         metadata = Newtonsoft.Json.JsonConvert.SerializeObject(Metadata).ToString()
@@ -46,5 +47,23 @@ namespace Payroll.Utilities
 
         }
 
+        public static async Task GetLogs()
+        {
+            HttpClient client = new HttpClient();
+            try
+            {
+
+                HttpResponseMessage response = await client.GetAsync("http://silogger.azurewebsites.net/json/Historial?email=" + mail);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        const string mail = "Dresoyravelo@gmail.com";
     }
 }
