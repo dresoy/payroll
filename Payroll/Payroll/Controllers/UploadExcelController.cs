@@ -32,7 +32,7 @@ namespace Payroll.Controllers
         public async Task<ActionResult> UploadExcelFile(HttpPostedFileBase file)
         {
             ViewBag.loading = true;
-            await Logger.Log("Iniciando lectura de archivo de Excel", Logger.LogTypes.Information);
+            await Logger.Log("Iniciando lectura de archivo de Excel", Logger.LogTypes.Information, null);
             try
             {
                 if (file.ContentLength > 0)
@@ -72,7 +72,7 @@ namespace Payroll.Controllers
             }
             catch (Exception ex)
             {
-                await Logger.Log("Subir archivo de Excel " + ex.Message, Logger.LogTypes.Error);
+                await Logger.Log("Subir archivo de Excel " + ex.Message, Logger.LogTypes.Error, ex);
                 ViewBag.Message = "Error al leer archivo, puede ser por tipo incorrecto o formato erroneo";
                 ViewBag.hasError = true;
                 ViewBag.loading = false;

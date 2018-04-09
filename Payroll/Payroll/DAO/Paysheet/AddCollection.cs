@@ -22,9 +22,9 @@ namespace Payroll.DAO
                 {
                     newList.Add(await ValidateRow(db, item));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    await Logger.Log("Saltando registro " + item.Name + item.LastName, Logger.LogTypes.Information);
+                    await Logger.Log("Saltando registro " + item.Name + item.LastName, Logger.LogTypes.Information, ex);
                 }
             }
 
@@ -82,7 +82,7 @@ namespace Payroll.DAO
             }
             catch (Exception ex)
             {
-                await Logger.Log("ValidateRow " + ex.Message, Logger.LogTypes.Information);
+                await Logger.Log("ValidateRow " + ex.Message, Logger.LogTypes.Information, ex);
                 throw ex;
             }
 

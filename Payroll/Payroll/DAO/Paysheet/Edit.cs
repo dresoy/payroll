@@ -12,7 +12,7 @@ namespace Payroll.DAO
     {
         public static async Task<Tbl_Payroll> EditAsync(Tbl_Payroll Record)
         {
-            await Logger.Log("Editando registros de Nomina", Logger.LogTypes.Information);
+            await Logger.Log("Editando registros de Nomina", Logger.LogTypes.Information, Record);
             try
             {
                 using (var db = new Models.dataContext())
@@ -39,7 +39,7 @@ namespace Payroll.DAO
             catch (Exception ex)
             {
                 var errorMessage = "Error en la edicion de registro de Nomina " + Record.Id + " " + ex.Message;
-                await Logger.Log(errorMessage, Logger.LogTypes.Error);
+                await Logger.Log(errorMessage, Logger.LogTypes.Error, ex);
                 throw new Exception("Esta Transaccion no puede ser realizada en el momento");
             }
         }

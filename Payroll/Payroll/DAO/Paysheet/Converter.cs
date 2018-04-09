@@ -28,7 +28,7 @@ namespace Payroll.DAO
             }
             catch (Exception ex)
             {
-                await Logger.Log("Error al convertir a Payroll " + ex.Message, Logger.LogTypes.Error);
+                await Logger.Log("Error al convertir a Payroll " + ex.Message, Logger.LogTypes.Error, ex);
                 throw ex;
             }
 
