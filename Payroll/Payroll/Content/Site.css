@@ -33,6 +33,7 @@ textarea {
 
 .glyphicon.normal-right-spinner {
     -webkit-animation: glyphicon-spin-r 2s infinite linear;
+    -moz-animation: glyphicon-spin-r 2s infinite linear;
     animation: glyphicon-spin-r 2s infinite linear;
 }
 

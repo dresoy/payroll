@@ -24,21 +24,20 @@
                     <li>@Html.ActionLink("Nomina", "Index", "Payroll")</li>
                     <li>@Html.ActionLink("Cargar Excel", "UploadExcelFile", "UploadExcel")</li>
                     <li>@Html.ActionLink("Reporte", "IndexAsync", "Report")</li>
-                    <li>@Html.ActionLink("Reporte", "LogsAsync", "Report")</li>
+                    <li>@Html.ActionLink("Logs", "LogsAsync", "Report")</li>
                     @*<li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
+
         @RenderBody()
-        <div class="navbar-fixed-bottom container">
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Payroll</p>
-            </footer>
-        </div>
     </div>
+    <hr />
+    <footer class="text-center">
+        <p>&copy; @DateTime.Now.Year - Payroll</p>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

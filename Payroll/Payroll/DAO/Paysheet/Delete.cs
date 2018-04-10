@@ -13,9 +13,10 @@ namespace Payroll.DAO
 
         public static async Task<Tbl_Payroll> DeleteAsync(Guid Id)
         {
-            await Logger.Log("Consultando registros de Nomina", Logger.LogTypes.Information, null);
             try
             {
+                Task log = Logger.Log("Consultando registros de Nomina", Logger.LogTypes.Information, null);
+
                 using (var db = new Models.dataContext())
                 {
                     var result = await Task.Run(() => (from t in db.Tbl_Payroll
@@ -24,7 +25,7 @@ namespace Payroll.DAO
 
                     if (result.Count == 1)
                     {
-                        
+
                         result.Single().Deleted = true;
                         result.Single().Modified = DateTime.Now;
                         await db.SaveChangesAsync();
@@ -39,7 +40,7 @@ namespace Payroll.DAO
             catch (Exception ex)
             {
                 var errorMessage = "Error al consultar el registro de Nomina " + Id + " " + ex.Message;
-                await Logger.Log(errorMessage, Logger.LogTypes.Error, ex);
+                Task log = Logger.Log(errorMessage, Logger.LogTypes.Error, ex);
                 throw new Exception("Esta Transaccion no puede ser realizada en el momento");
             }
         }

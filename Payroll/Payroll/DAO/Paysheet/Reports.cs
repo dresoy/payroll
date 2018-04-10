@@ -13,13 +13,14 @@ namespace Payroll.DAO.Reports
         public static async Task<EmployeesByTypeModel> GetEmployeesByTypeAsync()
         {
 
-            await Logger.Log("Consultando GetEmployeesByTypeAsync", Logger.LogTypes.Information, null);
 
             var db = new Models.dataContext();
             EmployeesByTypeModel result = new EmployeesByTypeModel();
 
             try
             {
+                Task log = Logger.Log("Consultando GetEmployeesByTypeAsync", Logger.LogTypes.Information, null);
+
                 var selection = await Task.Run(() => (from t in db.Tbl_Payroll
                                                       where t.Deleted == false
                                                       group t by t.Role into g
@@ -39,7 +40,7 @@ namespace Payroll.DAO.Reports
             }
             catch (Exception ex)
             {
-                await Logger.Log("Error consultando GetEmployeesByTypeAsync", Logger.LogTypes.Error, ex);
+                Task log = Logger.Log("Error consultando GetEmployeesByTypeAsync", Logger.LogTypes.Error, ex);
             }
             finally
             {

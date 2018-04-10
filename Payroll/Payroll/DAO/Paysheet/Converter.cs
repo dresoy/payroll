@@ -3,6 +3,7 @@ using Payroll.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Payroll.DAO
@@ -10,7 +11,7 @@ namespace Payroll.DAO
     public static partial class Paysheet
     {
 
-        public static async System.Threading.Tasks.Task<Tbl_Payroll> ToPayrollModelAsync(string role, string section, string name, string lastName, string hours, string amount)
+        public static Tbl_Payroll ToPayrollModel(string role, string section, string name, string lastName, string hours, string amount)
         {
             try
             {
@@ -28,7 +29,7 @@ namespace Payroll.DAO
             }
             catch (Exception ex)
             {
-                await Logger.Log("Error al convertir a Payroll " + ex.Message, Logger.LogTypes.Error, ex);
+                Task log = Logger.Log("Error al convertir a Payroll " + ex.Message, Logger.LogTypes.Error, ex);
                 throw ex;
             }
 

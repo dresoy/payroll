@@ -1,7 +1,67 @@
-﻿
+﻿@model IEnumerable<Payroll.Utilities.Logger.LogResponseObject>
+
 @{
-    ViewBag.Title = "LogsAsync";
+    ViewBag.Title = "Logs";
 }
 
 <h2>Listado de Logs</h2>
 
+
+@if (ViewBag.loading == false)
+{
+    if (ViewBag.hasError == true)
+    {
+        <div class="alert alert-danger" role="alert">
+            Error al cargar los Logs
+        </div>
+    }
+    else
+    {
+        <div class="panel panel-default">
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        Nivel
+                    </th>
+                    <th>
+                        Mensaje
+                    </th>
+                    <th>
+                        Metadata
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Level)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Message)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Metadata)
+                        </td>
+                    </tr>
+                }
+
+
+            </table>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center mgt-50">
+        <h3>
+            <span class="glyphicon glyphicon-refresh normal-right-spinner" aria-hidden="true"></span>
+        </h3>
+    </div>
+}

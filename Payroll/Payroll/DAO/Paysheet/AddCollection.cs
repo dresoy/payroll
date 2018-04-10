@@ -24,7 +24,7 @@ namespace Payroll.DAO
                 }
                 catch (Exception ex)
                 {
-                    await Logger.Log("Saltando registro " + item.Name + item.LastName, Logger.LogTypes.Information, ex);
+                    Task log = Logger.Log("Saltando registro " + item.Name + item.LastName, Logger.LogTypes.Information, ex);
                 }
             }
 
@@ -82,7 +82,7 @@ namespace Payroll.DAO
             }
             catch (Exception ex)
             {
-                await Logger.Log("ValidateRow " + ex.Message, Logger.LogTypes.Information, ex);
+                Task log = Logger.Log("ValidateRow " + ex.Message, Logger.LogTypes.Information, ex);
                 throw ex;
             }
 

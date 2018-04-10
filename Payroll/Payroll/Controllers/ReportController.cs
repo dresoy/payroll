@@ -16,6 +16,7 @@ namespace Payroll.Controllers
             DAO.Reports.Payroll.EmployeesByTypeModel r = null;
             ViewBag.loading = true;
             ViewBag.hasError = false;
+
             try
             {
                 r = await DAO.Reports.Payroll.GetEmployeesByTypeAsync();
@@ -23,7 +24,7 @@ namespace Payroll.Controllers
             }
             catch (Exception ex)
             {
-                await Logger.Log("No se puede mostrar el reporte", Logger.LogTypes.Error, ex);
+                Task log = Logger.Log("No se puede mostrar el reporte", Logger.LogTypes.Error, ex);
                 ViewBag.hasError = true;
             }
             finally { ViewBag.loading = false; }
@@ -33,18 +34,24 @@ namespace Payroll.Controllers
 
         public async Task<ActionResult> LogsAsync()
         {
+            var r = new List<Logger.LogResponseObject>();
+            ViewBag.loading = true;
+            ViewBag.hasError = false;
 
             try
             {
-                await Logger.GetLogs();
+                r = await Logger.GetLogs();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ViewBag.hasError = true;
 
-                throw;
+                Task log = Logger.Log("Could not get the logs", Logger.LogTypes.Error, ex);
+
             }
+            finally { ViewBag.loading = false; }
 
-            return View();
+            return View(r);
         }
 
     }

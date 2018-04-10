@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
@@ -47,14 +48,26 @@ namespace Payroll.Utilities
 
         }
 
-        public static async Task GetLogs()
+        public static async Task<List<LogResponseObject>> GetLogs()
         {
             HttpClient client = new HttpClient();
+
             try
             {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.GetAsync("http://silogger.azurewebsites.net/json/Historial?email=" + mail);
 
+                var readResponse = await response.Content.ReadAsStringAsync();
+
+                var jObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<LogResponseObject>>(readResponse);
+
+
+                var result = (from t in jObject
+                              orderby t.Date descending
+                              select t).ToList();
+
+                return result;
 
             }
             catch (Exception)
@@ -63,6 +76,18 @@ namespace Payroll.Utilities
                 throw;
             }
         }
+
+
+        public class LogResponseObject
+        {
+            public string __type { get; set; }
+            public DateTime Date { get; set; }
+            public string Email { get; set; }
+            public int Level { get; set; }
+            public string Message { get; set; }
+            public object Metadata { get; set; }
+        }
+
 
         const string mail = "Dresoyravelo@gmail.com";
     }

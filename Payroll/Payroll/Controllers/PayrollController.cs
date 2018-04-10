@@ -143,15 +143,15 @@ namespace Payroll.Controllers
                 try
                 {
                     var result = await DAO.Paysheet.EditAsync(tbl_Payroll);
+                    return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
-
+                    ViewBag.Message = ex.Message;
 
                 }
 
 
-                return RedirectToAction("Index");
 
             }
             return View(tbl_Payroll);
