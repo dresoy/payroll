@@ -159,6 +159,7 @@
   <ItemGroup>
     <Compile Include="Controllers\PayrollController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SendEmpDataController.cs" />
     <Compile Include="Controllers\UploadExcelController.cs" />
     <Compile Include="DAO\Paysheet\AddCollection.cs" />
     <Compile Include="DAO\Paysheet\Converter.cs" />
